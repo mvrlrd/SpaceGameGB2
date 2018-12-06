@@ -10,17 +10,20 @@ import ru.ibelykh.game.base.Base2DScreen;
 public class MenuScreen extends Base2DScreen {
 
     private Texture img;
-    private Vector2 pos, v, touch;
+    private Vector2 pos, v, touch, ed,v2, where;
 
 
 
     @Override
     public void show() {
         super.show();
-        img = new Texture("starsky.jpg");
+        ed= new Vector2(0,0);
+        img = new Texture("car.jpg");
         pos = new Vector2(0,0);
-        v = new Vector2(0f,1f);
+        v = new Vector2(1.6f,1.6f);
         touch = new Vector2();
+        v2 =new Vector2();
+        where = new Vector2();
     }
 
     @Override
@@ -32,7 +35,9 @@ public class MenuScreen extends Base2DScreen {
 //		batch.setColor(0.8f,0.44f,0.6f,0.23f);
         batch.draw(img, pos.x, pos.y);
         batch.end();
-        pos.add(v);
+        v2.set(ed.x*v.x,ed.y*v.y);
+        pos.add(v2);
+
     }
 
     @Override
@@ -46,6 +51,14 @@ public class MenuScreen extends Base2DScreen {
          super.touchDown(screenX, screenY, pointer, button);
          touch.set(screenX,Gdx.graphics.getHeight() - screenY);
         System.out.println("touch x = "+ touch.x+" "+ touch.y);
-         return false;
+
+where = touch.sub(pos);
+
+
+
+ed = where.nor();
+        System.out.println("ed vector touch = "+ ed);
+
+        return false;
     }
 }
