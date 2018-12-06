@@ -61,7 +61,7 @@ dispose();
 
     @Override
     public boolean keyTyped(char character) {
-        System.out.println("charakter = "+ character);
+//        System.out.println("charakter = "+ character);
         return false;
     }
 
