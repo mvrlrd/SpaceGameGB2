@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class SpaceBattles extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -14,6 +15,13 @@ public class SpaceBattles extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("starsky.jpg");
+
+		Vector2 v1 = new Vector2(1f,4f);
+		Vector2 v2 = new Vector2(0f,-1f);
+		v1.add(v2);
+		System.out.println("v1.x= "+v1.x+"  v1.y= "+v1.y);
+		System.out.println(v1.nor()+"    "+v1.nor().len());
+
 	}
 
 	@Override
