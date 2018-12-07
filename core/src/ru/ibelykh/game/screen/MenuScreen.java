@@ -5,48 +5,39 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
+
 import ru.ibelykh.game.base.Base2DScreen;
 
 public class MenuScreen extends Base2DScreen {
 
-    private Texture img, car , lollypoppy;
-    private Vector2 pos, pos2, pos3, v, touch, ed,v2, where;
-
-
+    private Texture img, ship;
+    private Vector2 pos, posShip, vShip;
 
     @Override
     public void show() {
         super.show();
-//        ed= new Vector2(0,0);
+
         img = new Texture("un.jpg");
         pos = new Vector2(0,0);
 
-        lollypoppy = new Texture("lollipop2.png");
-        pos3 = new Vector2();
+        ship = new Texture("da.jpg") ;
+        posShip = new Vector2(400,20);
+        vShip = new Vector2(0f,0);
 
-       car = new Texture("da.jpg") ;
-       pos2 = new Vector2(400,20);
-
-        v = new Vector2(0f,0);
-//        touch = new Vector2();
-//        v2 =new Vector2();
-        where = new Vector2();
     }
+
 
     @Override
     public void render(float delta) {
         super.render(delta);
         batch.begin();
         batch.draw(img, pos.x, pos.y);
-        batch.draw(car, pos2.x, pos.y);
-
-        batch.draw(lollypoppy,pos3.x,pos3.y);
-
-            pos2.add(v);
-
-if ((pos2.x<=-4)||(pos2.x>=811)){
-    v.set(0,0);
-}
+        batch.draw(ship, posShip.x, posShip.y);
+            posShip.add(vShip);
+                if ((posShip.x<=-4)||(posShip.x>=811)){
+                    vShip.set(0,0);
+                }
 
 //        System.out.println(pos2.add(v));
         //        Gdx.gl.glClearColor(0.2f, 0.2f, 0.7f, 1);
@@ -55,8 +46,10 @@ if ((pos2.x<=-4)||(pos2.x>=811)){
 
 //        v2.set(ed.x*v.x,ed.y*v.y);
 //        pos.add(v2);
+
         batch.end();
     }
+
 
     @Override
     public void dispose() {
@@ -69,37 +62,25 @@ if ((pos2.x<=-4)||(pos2.x>=811)){
     @Override
     public boolean keyDown(int keycode) {
         super.keyDown(keycode);
-
-            if ((keycode == 29)&&(pos2.x>-4)){
-
-
-                v.set(-10f, 0);
-                System.out.println(pos2.add(v));
-
+            if ((keycode == 29)&&(posShip.x>-4)){
+                vShip.set(-10f, 0);
             }
-            if ((keycode == 32)&&(pos2.x<811)) {
-
-                    v.set(10f, 0);
-                System.out.println(pos2.add(v));
-
-        } return false;
+            if ((keycode == 32)&&(posShip.x<811)) {
+                vShip.set(10f, 0);
+            }
+    return false;
     }
 
-    @Override
-    public boolean keyUp(int keycode) {
-         super.keyUp(keycode);
-
-        if (keycode==29) {
-            v.set(0, 0);
-        }
-        if (keycode==32){
-
-            v.set(0,0);
-        }
 
 
-        return false;
-    }
+//    @Override
+//    public boolean keyUp(int keycode) {
+//         super.keyUp(keycode);
+//
+//    return false;
+//    }
+
+
     //    @Override
 //    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 //         super.touchDown(screenX, screenY, pointer, button);
