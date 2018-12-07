@@ -29,7 +29,7 @@ public class MenuScreen extends Base2DScreen {
 
 
         Ship.getInstance().setShip(new Texture("da.jpg"));
-        Ship.getInstance().setPosShip(new Vector2(0f,-0.5f)) ;
+        Ship.getInstance().setPosShip(new Vector2(-0.05f,-0.5f)) ;
         Ship.getInstance().setvShip(new Vector2(0f,0));
 
     }

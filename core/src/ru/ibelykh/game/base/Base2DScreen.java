@@ -68,7 +68,7 @@ public class Base2DScreen implements Screen, InputProcessor {
 
         MatrixUtils.calcTransitionMatrix(screenToWorld,screenBounds,worldBounds);
         resize(worldBounds);
-        Ship.getInstance().setPosShip(new Vector2(0f,-0.5f));
+        Ship.getInstance().setPosShip(new Vector2(-0.05f,-0.5f));
         Ship.getInstance().setvShip(new Vector2(0f,0f));
 
     }
