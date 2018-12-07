@@ -5,25 +5,32 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.ArrayList;
+
 
 import ru.ibelykh.game.base.Base2DScreen;
 
 public class MenuScreen extends Base2DScreen {
 
     private Texture img, ship;
-    private Vector2 pos, posShip, vShip;
+    private Vector2 pos;
+
+//    posShip, vShip;
+
+//    public void setPosShip(Vector2 posShip) {
+//        this.posShip = posShip;
+//    }
 
     @Override
     public void show() {
         super.show();
 
         img = new Texture("un.jpg");
-        pos = new Vector2(0,0);
+        pos = new Vector2(-1f,-1f);
 
-        ship = new Texture("da.jpg") ;
-        posShip = new Vector2(400,20);
-        vShip = new Vector2(0f,0);
+
+        Ship.getInstance().setShip(new Texture("da.jpg"));
+        Ship.getInstance().setPosShip(new Vector2(0f,-0.5f)) ;
+        Ship.getInstance().setvShip(new Vector2(0f,0));
 
     }
 
@@ -32,11 +39,11 @@ public class MenuScreen extends Base2DScreen {
     public void render(float delta) {
         super.render(delta);
         batch.begin();
-        batch.draw(img, pos.x, pos.y);
-        batch.draw(ship, posShip.x, posShip.y);
-            posShip.add(vShip);
-                if ((posShip.x<=-4)||(posShip.x>=811)){
-                    vShip.set(0,0);
+        batch.draw(img, pos.x, pos.y,2f,2f);
+        batch.draw(Ship.getInstance().getShip(), Ship.getInstance().getPosShip().x, Ship.getInstance().getPosShip().y,0.1f,0.15f);
+        Ship.getInstance().getPosShip().add(Ship.getInstance().getvShip());
+                if ((Ship.getInstance().getPosShip().x<-getWorldBounds().getWidth()/2)||(Ship.getInstance().getPosShip().x>((getWorldBounds().getWidth()/2)-0.1f))){
+                    Ship.getInstance().getvShip().set(0f,0f);
                 }
 
 //        System.out.println(pos2.add(v));
@@ -62,11 +69,11 @@ public class MenuScreen extends Base2DScreen {
     @Override
     public boolean keyDown(int keycode) {
         super.keyDown(keycode);
-            if ((keycode == 29)&&(posShip.x>-4)){
-                vShip.set(-10f, 0);
+            if ((keycode == 29)&&(Ship.getInstance().getPosShip().x>-getWorldBounds().getWidth()/2)){
+                Ship.getInstance().getvShip().set(-0.01f, 0);
             }
-            if ((keycode == 32)&&(posShip.x<811)) {
-                vShip.set(10f, 0);
+            if ((keycode == 32)&&(Ship.getInstance().getPosShip().x<(getWorldBounds().getWidth()/2)-0.1f)) {
+                Ship.getInstance().getvShip().set(0.01f, 0);
             }
     return false;
     }
