@@ -25,6 +25,7 @@ public class MenuScreen extends Base2DScreen {
     @Override
     public void show() {
         super.show();
+        textureAtlas = new TextureAtlas("star.atlas"); // Star 3
 //textureAtlas = new TextureAtlas("textures/menuAtlas.tpack"); // Star 3
         img = new Texture("un.jpg");
         pos = new Vector2(-1f,-1f);
