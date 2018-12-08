@@ -8,8 +8,10 @@ import ru.ibelykh.game.Star2DGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-config.width=1024;
-config.height=1024;
+float aspect = 3f/4f;
+config.width=650;
+config.height=(int)(config.width/aspect);
+config.resizable=false;
 		new LwjglApplication(new Star2DGame(), config);
 	}
 }
