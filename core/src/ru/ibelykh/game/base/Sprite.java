@@ -1,5 +1,6 @@
 package ru.ibelykh.game.base;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +12,7 @@ public abstract class Sprite extends Rect {
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame; //счетчик на каком кадре массива находимся (актуально для взрыва где много кадров)
+
 
     public Sprite(TextureRegion region) {
         regions = new TextureRegion[1];
@@ -25,6 +27,8 @@ public abstract class Sprite extends Rect {
                 angle // угол вращения
         );
     }
+
+
     public void setHeightProportion (float height){
 setHeight(height);
 float aspect = regions[frame].getRegionWidth() / (float) regions[frame].getRegionHeight();

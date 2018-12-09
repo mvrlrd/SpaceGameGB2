@@ -1,4 +1,4 @@
-package ru.ibelykh.game.screen;
+package ru.ibelykh.game.sprite;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,8 +16,8 @@ public class Star extends Sprite {
     public Star(TextureAtlas atlas) {
 
         super(atlas.findRegion("simpleStar"));
-        setHeightProportion(0.005f);
-        v.set(Rnd.nextFloat(-0.005f,0.005f),Rnd.nextFloat(-0.5f,-0.1f));
+        setHeightProportion(Rnd.nextFloat(0.0001f,0.01f));
+        v.set(Rnd.nextFloat(-0.005f,0.005f),Rnd.nextFloat(-0.5f,-0.001f));
     }
 
     @Override

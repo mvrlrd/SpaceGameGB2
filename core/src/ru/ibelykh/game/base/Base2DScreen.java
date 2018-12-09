@@ -1,5 +1,6 @@
 package ru.ibelykh.game.base;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -10,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.ibelykh.game.math.MatrixUtils;
 import ru.ibelykh.game.math.Rect;
-import ru.ibelykh.game.screen.Ship;
+
 
 
 public class Base2DScreen implements Screen, InputProcessor {
@@ -24,19 +25,25 @@ public class Base2DScreen implements Screen, InputProcessor {
     protected Matrix4 worldToGl;
     protected Matrix3 screenToWorld;
 
+    protected Game game;
+
     private Vector2 touch = new Vector2();
 
 
-    public Rect getWorldBounds() {
-        return worldBounds;
-    }
 
-    public Base2DScreen(){
+
+
+    public Base2DScreen(Game game){
+        this.game = game;
         this.screenBounds = new Rect();
         this.worldBounds = new Rect();
         this.glBounds = new Rect(0,0,1f,1f);
         this.worldToGl = new Matrix4();
         this.screenToWorld = new Matrix3();
+    }
+
+    public Rect getWorldBounds() {
+        return worldBounds;
     }
 
     @Override
@@ -68,8 +75,7 @@ public class Base2DScreen implements Screen, InputProcessor {
 
         MatrixUtils.calcTransitionMatrix(screenToWorld,screenBounds,worldBounds);
         resize(worldBounds);
-        Ship.getInstance().setPosShip(new Vector2(-0.05f,-0.5f));
-        Ship.getInstance().setvShip(new Vector2(0f,0f));
+
 
     }
 
@@ -90,7 +96,7 @@ public class Base2DScreen implements Screen, InputProcessor {
     @Override
     public void hide() {
         System.out.println("hide");
-dispose();
+        dispose();
     }
 
     @Override
@@ -127,7 +133,7 @@ dispose();
     }
 
     public boolean touchDown(Vector2 touch,  int pointer) {
-        System.out.println("touchdown touch.x= "+ touch.x+" "+ " touch.y= "+ touch.y);
+        System.out.println("touchdown touch.x= "+ touch.x+" "+ " touch.y= "+ touch.y+ "  POINTER "+pointer);
 
         return false;
     }
