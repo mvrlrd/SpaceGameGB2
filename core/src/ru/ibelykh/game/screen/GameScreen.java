@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.ibelykh.game.base.Base2DScreen;
 import ru.ibelykh.game.math.Rect;
+import ru.ibelykh.game.pool.BulletPool;
 import ru.ibelykh.game.sprite.Background;
 import ru.ibelykh.game.sprite.ButtonExit;
 import ru.ibelykh.game.sprite.Ship;
@@ -32,7 +33,8 @@ public class GameScreen extends Base2DScreen {
     private ButtonExit buttonExit;
     private  TextureAtlas btAtlas;
 
-
+    private BulletPool bulletPool;
+    private TextureAtlas bulletAtlas;
 
 
 
@@ -53,10 +55,12 @@ public class GameScreen extends Base2DScreen {
         for (int i = 0; i <star.length ; i++) {
             star[i]= new Star(textureAtlas);
         }
+        bulletPool = new BulletPool();
+        bulletAtlas= new TextureAtlas("bulletatlas.atlas");
 
         //SHIP
         shp = new Texture("da.jpg");
-        ship = new Ship(new TextureRegion(shp));
+        ship = new Ship(new TextureRegion(shp),bulletPool,bulletAtlas);
 
 //        btAtlas = new TextureAtlas("buttons/menubuttons.atlas");
 //        buttonExit = new ButtonExit(btAtlas);
@@ -66,7 +70,7 @@ public class GameScreen extends Base2DScreen {
     @Override
     public void render(float delta) {
         update(delta);
-        chechCollisions();
+        checkCollisions();
         deleteAllDestroyed();
         draw();
     }
@@ -78,16 +82,18 @@ public class GameScreen extends Base2DScreen {
             star[i].update(delta);
         }
 
+        bulletPool.updateActiveSprites(delta);
+
         //SHIP UPDATE
         ship.update(delta);
     }
 
-    public void chechCollisions(){
+    public void checkCollisions(){
 
     }
 
     public void deleteAllDestroyed(){
-
+bulletPool.freeAllDestroyedActiveSprites();
     }
 
     public void draw(){
@@ -105,7 +111,7 @@ public class GameScreen extends Base2DScreen {
         for (int i = 0; i <star.length ; i++) {  //Star 5
             star[i].draw(batch);
         }
-
+bulletPool.drawActiveSprites(batch);
 
         // Buttons
 //        buttonExit.draw(batch);
@@ -134,20 +140,36 @@ public class GameScreen extends Base2DScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
+        ship.touchDown(touch,pointer);
         return super.touchDown(touch, pointer);
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
+        ship.touchUp(touch,pointer);
         return super.touchUp(touch, pointer);
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        ship.keyDown(keycode);
+        return super.keyDown(keycode);
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        ship.keyUp(keycode);
+        return super.keyUp(keycode);
     }
 
     @Override
     public void dispose() {
         super.dispose();
         shp.dispose();
+        bulletPool.dispose();
         bg.dispose();
         textureAtlas.dispose(); //star
 
     }
+
 }
