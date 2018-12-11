@@ -34,7 +34,7 @@ public class GameScreen extends Base2DScreen {
     private  TextureAtlas btAtlas;
 
     private BulletPool bulletPool;
-    private TextureAtlas bulletAtlas;
+    public TextureAtlas bulletAtlas;
 
 
 
@@ -56,11 +56,11 @@ public class GameScreen extends Base2DScreen {
             star[i]= new Star(textureAtlas);
         }
         bulletPool = new BulletPool();
-        bulletAtlas= new TextureAtlas("bulletatlas.atlas");
+//        bulletAtlas= new TextureAtlas("bulletatlas.atlas");
 
         //SHIP
         shp = new Texture("da.jpg");
-        ship = new Ship(new TextureRegion(shp),bulletPool,bulletAtlas);
+        ship = new Ship(new TextureRegion(shp),bulletPool,new TextureAtlas("bulletatlas.atlas"));
 
 //        btAtlas = new TextureAtlas("buttons/menubuttons.atlas");
 //        buttonExit = new ButtonExit(btAtlas);

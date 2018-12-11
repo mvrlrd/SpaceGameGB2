@@ -51,7 +51,7 @@ this.worldBounds=worldBounds;
                 pressedRight = true;
                 moveRight();
                 break;
-            case Input.Keys.UP:
+            case Input.Keys.W:
                shoot();
             break;
         }
@@ -123,7 +123,7 @@ else {
 
     public void shoot(){
         Bullet bullet = bulletPool.obtain();
-        bullet.set(this,atlas.findRegion("lollipop2"),pos,new Vector2(0,0.5f),0.04f,worldBounds,1);
+        bullet.set(this,atlas.findRegion("bullet2"),pos,new Vector2(0,0.5f),0.02f,worldBounds,1);
 
     }
 
