@@ -1,0 +1,19 @@
+ship-0.png
+size: 226, 526
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ship
+  rotate: false
+  xy: 1, 245
+  size: 207, 280
+  orig: 220, 300
+  offset: 4, 12
+  index: -1
+shipwasattacked
+  rotate: false
+  xy: 1, 1
+  size: 224, 242
+  orig: 224, 243
+  offset: 0, 1
+  index: -1

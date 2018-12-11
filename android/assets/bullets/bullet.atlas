@@ -1,0 +1,19 @@
+bullet.png
+size: 1014, 256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+kaktus
+  rotate: true
+  xy: 1, 1
+  size: 254, 518
+  orig: 259, 524
+  offset: 5, 3
+  index: -1
+sale
+  rotate: false
+  xy: 521, 1
+  size: 492, 251
+  orig: 492, 251
+  offset: 0, 0
+  index: -1
