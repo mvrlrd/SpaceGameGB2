@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.ibelykh.game.math.MatrixUtils;
 import ru.ibelykh.game.math.Rect;
-
+import ru.ibelykh.game.screen.SoundTrack;
 
 
 public class Base2DScreen implements Screen, InputProcessor {
@@ -40,6 +40,7 @@ public class Base2DScreen implements Screen, InputProcessor {
         this.glBounds = new Rect(0,0,1f,1f);
         this.worldToGl = new Matrix4();
         this.screenToWorld = new Matrix3();
+
     }
 
     public Rect getWorldBounds() {
@@ -175,4 +176,9 @@ public class Base2DScreen implements Screen, InputProcessor {
 //        System.out.println("keydowm  keycode = "+ keycode);
         return false;
     }
-}
+
+
+    //SOUND
+
+    }
+

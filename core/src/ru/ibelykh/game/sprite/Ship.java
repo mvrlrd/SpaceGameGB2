@@ -10,6 +10,7 @@ import ru.ibelykh.game.base.Sprite;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.math.Rnd;
 import ru.ibelykh.game.pool.BulletPool;
+import ru.ibelykh.game.screen.SoundTrack;
 
 public class Ship extends Sprite {
 
@@ -21,7 +22,7 @@ public class Ship extends Sprite {
 
     private BulletPool bulletPool;
     private TextureAtlas atlas;
-
+     private SoundTrack soundTrack = new SoundTrack("sounds/pau.wav");
 
 
     public Ship(TextureRegion region, BulletPool bulletPool, TextureAtlas atlas) {
@@ -53,6 +54,9 @@ this.worldBounds=worldBounds;
                 break;
             case Input.Keys.W:
                shoot();
+
+               soundTrack.playSoundTrack(0.3f);
+
             break;
         }
         return false;
@@ -90,12 +94,22 @@ else {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        return super.touchDown(touch, pointer);
+         super.touchDown(touch, pointer);
+        if (touch.x<pos.x){
+            moveLeft();
+        }
+        if (touch.x>pos.x){
+            moveRight();
+        }
+        return false;w
+
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
-        return super.touchUp(touch, pointer);
+       return   super.touchUp(touch, pointer);
+
+
     }
 
        private void moveRight(){
@@ -117,7 +131,7 @@ else {
         super.update(delta);
 
         pos.mulAdd(v, delta);
-//        checkAndHandleBounds();
+        checkAndHandleBounds();
 
     }
 
@@ -127,12 +141,8 @@ else {
 
     }
 
-    //    private void checkAndHandleBounds() {
-//        if (getRight() < worldBounds.getLeft()) setLeft(worldBounds.getRight());
-//        if (getRight() > worldBounds.getRight()) setRight(worldBounds.getLeft());
-//        if (getTop() < worldBounds.getBottom()) setBottom(worldBounds.getTop());
-////        if (getTop() > worldBounds.getTop()) setTop(worldBounds.getBottom());
-//
-//
-//    }
+        private void checkAndHandleBounds() {
+        if (getLeft() <= worldBounds.getLeft()) stop();
+        if (getRight() >= worldBounds.getRight()) stop();
+    }
     }
