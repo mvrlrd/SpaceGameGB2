@@ -13,7 +13,6 @@ public class SoundTrack  implements   Runnable{
          this.sound = Gdx.audio.newSound(Gdx.files.internal(fileName));
     }
 
-    
     public SoundTrack(Music music) {
         this.music = music;
     }
