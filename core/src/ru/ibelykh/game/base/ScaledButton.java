@@ -9,25 +9,20 @@ public abstract class ScaledButton extends Sprite {
     private int pointer;
     private boolean pressed;
 
-
-
     public ScaledButton(TextureRegion region) {
         super(region);
-
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         if (pressed || !isMe(touch)){
-            System.out.println("not TOUCHED");
-            return false;
+        return false;
         }
         else {
             pressed = true;
             this.pointer = pointer;
             scale = PRESS_SCALE;
-            System.out.println("Pressedddddd");
-        }
+             }
         return false;
 
     }

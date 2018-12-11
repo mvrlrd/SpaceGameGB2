@@ -1,6 +1,5 @@
 package ru.ibelykh.game.utils;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Regions {
@@ -28,5 +27,4 @@ public class Regions {
         }
         return  regions;
     }
-
 }

@@ -1,10 +1,9 @@
 package ru.ibelykh.game.base;
 
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.utils.Regions;
 
@@ -27,7 +26,6 @@ public abstract class Sprite extends Rect {
         regions = Regions.split(region, rows, cols, frames);
     }
 
-
     public void draw(SpriteBatch batch){
         batch.draw(regions[frame],/*текущий регион*/
                 getLeft(), getBottom(), //точка отрисовки (смещаем на половину ширины и высоты) потому что отрисовывается с левого нижнего угла
@@ -35,26 +33,25 @@ public abstract class Sprite extends Rect {
                 getWidth(), getHeight(), //ширина и высота
                 scale,scale, //масштаб по Х и по У
                 angle // угол вращения
-        );
-    }
+        );}
 
 
     public void setHeightProportion (float height){
-setHeight(height);
-float aspect = regions[frame].getRegionWidth() / (float) regions[frame].getRegionHeight();
-setWidth(height*aspect);
+        setHeight(height);
+        float aspect = regions[frame].getRegionWidth() / (float) regions[frame].getRegionHeight();
+        setWidth(height*aspect);
     }
 
     public void resize (Rect worldBounds){
-
     }
-    public void update (float delta){
 
+    public void update (float delta){
     }
 
     public boolean touchDown(Vector2 touch, int pointer){
         return  false;
     }
+
     public boolean touchUp(Vector2 touch, int pointer){
         return  false;
     }

@@ -3,23 +3,18 @@ package ru.ibelykh.game.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
 import ru.ibelykh.game.base.Base2DScreen;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.pool.BulletPool;
 import ru.ibelykh.game.sprite.Background;
-import ru.ibelykh.game.sprite.ButtonExit;
 import ru.ibelykh.game.sprite.Ship;
 import ru.ibelykh.game.sprite.Star;
 
 public class GameScreen extends Base2DScreen{
-
 
     private static final int STAR_COUNT = 128;
     private TextureAtlas textureAtlas;
@@ -30,19 +25,13 @@ public class GameScreen extends Base2DScreen{
     //SHIP
     private Ship ship;
     private Texture shp;
-
-    //Buttons
-    private ButtonExit buttonExit;
-    private  TextureAtlas btAtlas;
+    private TextureAtlas atl;
 
     private BulletPool bulletPool;
-    private TextureAtlas bulletAtlas;
-
     //SOUND
-   private Thread  soundThread;
+    private Thread  soundThread;
     private SoundTrack soundTrack;
- private Music music;
-
+    private Music music;
 
 
     public GameScreen(Game game) {
@@ -52,6 +41,8 @@ public class GameScreen extends Base2DScreen{
     @Override
     public void show() {
         super.show();
+
+        //BACKGROUND
         bg = new TextureAtlas("backgrounds/backgrounds.atlas");
         background = new Background(bg,"lvl1bg");
 
@@ -62,22 +53,16 @@ public class GameScreen extends Base2DScreen{
             star[i]= new Star(textureAtlas);
         }
         bulletPool = new BulletPool();
-//        bulletAtlas= new TextureAtlas("bulletatlas.atlas");
 
         //SHIP
-        shp = new Texture("da.jpg");
-        ship = new Ship(new TextureRegion(shp),bulletPool,new TextureAtlas("bulletatlas.atlas"));
+        atl = new TextureAtlas("images/shipsAndBullets.atlas");
+        ship = new Ship(atl,bulletPool);
 
-//        btAtlas = new TextureAtlas("buttons/menubuttons.atlas");
-//        buttonExit = new ButtonExit(btAtlas);
-
-
-        //SOUND
+        //SOUND     Попытка реализовать музыку в другом потоке
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/fighttheme.mp3"));
         soundTrack = new SoundTrack(music);
         soundThread = new Thread(soundTrack);
         soundThread.start();
-
     }
 
     @Override
@@ -90,6 +75,7 @@ public class GameScreen extends Base2DScreen{
 
 
     public void update(float delta){
+
         //STAR UPDATE
         for (int i = 0; i <star.length ; i++) {
             star[i].update(delta);
@@ -101,11 +87,10 @@ public class GameScreen extends Base2DScreen{
     }
 
     public void checkCollisions(){
-
     }
 
     public void deleteAllDestroyed(){
-bulletPool.freeAllDestroyedActiveSprites();
+        bulletPool.freeAllDestroyedActiveSprites();
     }
 
     public void draw(){
@@ -113,24 +98,15 @@ bulletPool.freeAllDestroyedActiveSprites();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
-
         background.draw(batch);
-
-        //SHIP DRAW
         ship.draw(batch);
-
         //STAR DRAW
         for (int i = 0; i <star.length ; i++) {  //Star 5
             star[i].draw(batch);
         }
-bulletPool.drawActiveSprites(batch);
+        bulletPool.drawActiveSprites(batch);
 
-        // Buttons
-//        buttonExit.draw(batch);
-//        buttonNewGame.draw(batch);
         batch.end();
-
-
     }
 
     @Override
@@ -142,12 +118,8 @@ bulletPool.drawActiveSprites(batch);
         }
         //BACKGROUND RESIZE
         background.resize(worldBounds);
-
         //SHIP RESIZE
         ship.resize(worldBounds);
-
-//        buttonExit.resize(worldBounds);
-//        buttonNewGame.resize(worldBounds);
     }
 
     @Override
@@ -184,17 +156,4 @@ bulletPool.drawActiveSprites(batch);
         textureAtlas.dispose(); //star
 
     }
-
-
-//    @Override
-//    public Rect getWorldBounds() {
-//        return super.getWorldBounds();
-//    }
-//
-//    @Override
-//    public void playSoundTrack() {
-//        super.playSoundTrack();
-//        Sound fightTheme = Gdx.audio.newSound(Gdx.files.internal("sounds/fighttheme.mp3"));
-//        fightTheme.play(0.6f);
-//    }
 }

@@ -10,10 +10,8 @@ public abstract class SpritesPool <T extends  Sprite> {
     //список активных объектов
     protected List<T> activeObjects = new ArrayList<T>();
 
-
     //список свободных объектов
     protected List<T> freeObjects = new ArrayList<T>();
-
 
     //проверяет есть ли нужный объект в пуле. если есть - вытаскивает его в активный пул и удаляет из фри. если нет то создает
     public T obtain(){
@@ -23,7 +21,6 @@ public abstract class SpritesPool <T extends  Sprite> {
         }
         else {
             object = freeObjects.remove(freeObjects.size() -1 );
-
         }
        activeObjects.add(object);
         System.out.println("active/free: "+ activeObjects.size()+" / "+ freeObjects.size());
@@ -31,7 +28,6 @@ public abstract class SpritesPool <T extends  Sprite> {
     }
 
     protected abstract T newObject();
-
 
     public void updateActiveSprites(float delta) {
         for (int i = 0; i < activeObjects.size(); i++) {
@@ -41,6 +37,7 @@ public abstract class SpritesPool <T extends  Sprite> {
             }
         }
     }
+
     public void drawActiveSprites(SpriteBatch batch) {
         for (int i = 0; i < activeObjects.size(); i++) {
             Sprite sprite = activeObjects.get(i);
@@ -49,12 +46,14 @@ public abstract class SpritesPool <T extends  Sprite> {
             }
         }
     }
+
     private void free(T object){
         if (activeObjects.remove(object)){
             freeObjects.add(object);
             System.out.println("active/free: "+ activeObjects.size()+" / "+ freeObjects.size());
         }
     }
+
     public void dispose(){
         activeObjects.clear();
         freeObjects.clear();
@@ -69,7 +68,7 @@ public abstract class SpritesPool <T extends  Sprite> {
             T sprite = activeObjects.get(i);
             if (sprite.isDestroyed()) {
                 free(sprite);
-                i -- ;
+                i-- ;
                 sprite.setDestroyed(false);
             }
         }

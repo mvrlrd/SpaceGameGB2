@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-
 import ru.ibelykh.game.math.MatrixUtils;
 import ru.ibelykh.game.math.Rect;
-import ru.ibelykh.game.screen.SoundTrack;
+
 
 
 public class Base2DScreen implements Screen, InputProcessor {

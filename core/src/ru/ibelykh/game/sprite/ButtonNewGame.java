@@ -2,8 +2,6 @@ package ru.ibelykh.game.sprite;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-
-
 import ru.ibelykh.game.base.ScaledButton;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.screen.GameScreen;
@@ -28,6 +26,5 @@ public class ButtonNewGame extends ScaledButton {
     @Override
     public void actionPerformed() {
     game.setScreen(new GameScreen(game));
-
     }
 }
