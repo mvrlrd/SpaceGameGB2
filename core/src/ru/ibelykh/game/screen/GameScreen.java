@@ -24,7 +24,6 @@ public class GameScreen extends Base2DScreen{
     private TextureAtlas bg;
     //SHIP
     private Ship ship;
-    private Texture shp;
     private TextureAtlas atl;
 
     private BulletPool bulletPool;
@@ -149,7 +148,6 @@ public class GameScreen extends Base2DScreen{
     @Override
     public void dispose() {
         super.dispose();
-        shp.dispose();
         bulletPool.dispose();
         bg.dispose();
         soundThread.stop();

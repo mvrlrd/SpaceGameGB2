@@ -25,7 +25,7 @@ public class Ship extends BattleShip {
         super(atlas.findRegion("shipwasattacked"),1,1,1);
         setHeightProportion(0.15f);
         this.bulletPool = bulletPool;
-        this.reloadInterval = 0.2f;
+        this.reloadInterval = 0.25f;
         this.bulletRegion = atlas.findRegion("kaktus");
         this.bulletHeight=0.05f;
         this.bulletV.set(0,0.5f);
