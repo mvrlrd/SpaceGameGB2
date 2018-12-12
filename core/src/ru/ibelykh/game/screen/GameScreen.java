@@ -170,7 +170,6 @@ public class GameScreen extends Base2DScreen{
         bg.dispose();
         music.dispose();
         shipShootSound.dispose();
-//        soundThread.stop();
         enemyPool.dispose();
         textureAtlas.dispose(); //star
 

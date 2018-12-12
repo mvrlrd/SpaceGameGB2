@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.pool.BulletPool;
-//import ru.ibelykh.game.screen.SoundTrack;
 import ru.ibelykh.game.sprite.Bullet;
 
 public class BattleShip extends Sprite {

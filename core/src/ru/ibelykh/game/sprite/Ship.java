@@ -8,14 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 import ru.ibelykh.game.base.BattleShip;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.pool.BulletPool;
-//import ru.ibelykh.game.screen.SoundTrack;
 
 public class Ship extends BattleShip {
 
     private Vector2 v0 = new Vector2(0.5f, 0);
     private boolean pressedLeft;
     private boolean pressedRight;
-//    private SoundTrack soundTrack = new SoundTrack("sounds/pau.wav");
     private static final int INVALID_POINTER = -1;
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
@@ -51,10 +49,7 @@ super.resize(worldBounds);
                 pressedRight = true;
                 moveRight();
                 break;
-            case Input.Keys.W:
-//               shoot(soundTrack);
-            break;
-        }
+                   }
         return false;
     }
 
@@ -143,7 +138,6 @@ super.resize(worldBounds);
         reloadTimer+=delta;
         if (reloadTimer>=reloadInterval){
             reloadTimer=0f;
-//            shoot(soundTrack);
             shoot();
         }
         checkAndHandleBounds();

@@ -3,6 +3,7 @@ package ru.ibelykh.game.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -24,6 +25,8 @@ public class MenuScreen extends Base2DScreen  {
     //Buttons
     private ButtonExit buttonExit;
     private  TextureAtlas btAtlas;
+
+    private Music menuMusic;
 
     private ButtonNewGame buttonNewGame;
 
@@ -48,6 +51,11 @@ public class MenuScreen extends Base2DScreen  {
         btAtlas = new TextureAtlas("buttons/menubuttons.atlas");
         buttonExit = new ButtonExit(btAtlas);
         buttonNewGame = new ButtonNewGame(btAtlas,game);
+
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainTheme.mp3"));
+        menuMusic.setVolume(0.5f);
+        menuMusic.setLooping(true);
+        menuMusic.play();
     }
 
     @Override
@@ -100,6 +108,7 @@ public class MenuScreen extends Base2DScreen  {
         bg.dispose();
         textureAtlas.dispose(); //star
         btAtlas.dispose();
+        menuMusic.dispose();
         super.dispose();
     }
 
