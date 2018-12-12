@@ -18,7 +18,7 @@ public class Base2DScreen implements Screen, InputProcessor {
     protected SpriteBatch batch;
 
     private Rect screenBounds;  //для расчета соотношений сторон экрана
-    private Rect worldBounds;    // наша координатная сетка где высота 1f а ширина плавающая (1f*aspect)
+    protected Rect worldBounds;    // наша координатная сетка где высота 1f а ширина плавающая (1f*aspect)
     private Rect glBounds;  // координатная сетки openGl 2f*2f
 
     protected Matrix4 worldToGl;

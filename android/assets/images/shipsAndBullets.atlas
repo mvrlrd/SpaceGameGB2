@@ -3,6 +3,13 @@ size: 494, 773
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+evelship
+  rotate: false
+  xy: 257, 245
+  size: 233, 173
+  orig: 283, 283
+  offset: 29, 98
+  index: -1
 kaktus
   rotate: false
   xy: 1, 1
@@ -17,7 +24,7 @@ sale
   orig: 492, 251
   offset: 0, 0
   index: -1
-shipwasattacked
+shipwasattacked 12.47.52
   rotate: false
   xy: 257, 1
   size: 224, 242

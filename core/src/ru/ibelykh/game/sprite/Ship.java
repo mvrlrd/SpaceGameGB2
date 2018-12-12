@@ -2,27 +2,27 @@ package ru.ibelykh.game.sprite;
 
 import com.badlogic.gdx.Input;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import ru.ibelykh.game.base.BattleShip;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.pool.BulletPool;
-import ru.ibelykh.game.screen.SoundTrack;
+//import ru.ibelykh.game.screen.SoundTrack;
 
 public class Ship extends BattleShip {
 
     private Vector2 v0 = new Vector2(0.5f, 0);
     private boolean pressedLeft;
     private boolean pressedRight;
-    private SoundTrack soundTrack = new SoundTrack("sounds/pau.wav");
+//    private SoundTrack soundTrack = new SoundTrack("sounds/pau.wav");
     private static final int INVALID_POINTER = -1;
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
-    private float reloadInterval;
-    private float reloadTimer;
 
-    public Ship(TextureAtlas atlas, BulletPool bulletPool) {
-        super(atlas.findRegion("shipwasattacked"),1,1,1);
+
+    public Ship(TextureAtlas atlas, BulletPool bulletPool, Sound sound) {
+        super(atlas.findRegion("shipwasattacked 12.47.52"),1,1,1, sound);
         setHeightProportion(0.15f);
         this.bulletPool = bulletPool;
         this.reloadInterval = 0.25f;
@@ -30,6 +30,7 @@ public class Ship extends BattleShip {
         this.bulletHeight=0.05f;
         this.bulletV.set(0,0.5f);
         this.bulletDamage = 1;
+        this.hp = 100; //кол-во жизней
     }
 
     @Override
@@ -51,7 +52,7 @@ super.resize(worldBounds);
                 moveRight();
                 break;
             case Input.Keys.W:
-               shoot(soundTrack);
+//               shoot(soundTrack);
             break;
         }
         return false;
@@ -142,7 +143,8 @@ super.resize(worldBounds);
         reloadTimer+=delta;
         if (reloadTimer>=reloadInterval){
             reloadTimer=0f;
-            shoot(soundTrack);
+//            shoot(soundTrack);
+            shoot();
         }
         checkAndHandleBounds();
     }

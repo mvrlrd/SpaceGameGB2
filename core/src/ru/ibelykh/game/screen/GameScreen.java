@@ -3,6 +3,7 @@ package ru.ibelykh.game.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -10,9 +11,11 @@ import com.badlogic.gdx.math.Vector2;
 import ru.ibelykh.game.base.Base2DScreen;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.pool.BulletPool;
+import ru.ibelykh.game.pool.EnemyPool;
 import ru.ibelykh.game.sprite.Background;
 import ru.ibelykh.game.sprite.Ship;
 import ru.ibelykh.game.sprite.Star;
+import ru.ibelykh.game.utils.EnemiesEmitter;
 
 public class GameScreen extends Base2DScreen{
 
@@ -28,9 +31,13 @@ public class GameScreen extends Base2DScreen{
 
     private BulletPool bulletPool;
     //SOUND
-    private Thread  soundThread;
-    private SoundTrack soundTrack;
+//    private Thread  soundThread;
+//    private SoundTrack soundTrack;
     private Music music;
+    private Sound shipShootSound;
+
+    private EnemyPool enemyPool;
+    private EnemiesEmitter enemiesEmitter;
 
 
     public GameScreen(Game game) {
@@ -40,6 +47,9 @@ public class GameScreen extends Base2DScreen{
     @Override
     public void show() {
         super.show();
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/fighttheme.mp3"));
+        music.setLooping(true);
+        music.play();
 
         //BACKGROUND
         bg = new TextureAtlas("backgrounds/backgrounds.atlas");
@@ -52,16 +62,18 @@ public class GameScreen extends Base2DScreen{
             star[i]= new Star(textureAtlas);
         }
         bulletPool = new BulletPool();
-
-        //SHIP
+        shipShootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pau.wav"));
         atl = new TextureAtlas("images/shipsAndBullets.atlas");
-        ship = new Ship(atl,bulletPool);
+        ship = new Ship(atl,bulletPool,shipShootSound);
+
+        enemyPool = new EnemyPool(bulletPool,ship,worldBounds);
+        enemiesEmitter = new EnemiesEmitter(worldBounds, enemyPool, atl);
 
         //SOUND     Попытка реализовать музыку в другом потоке
-        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/fighttheme.mp3"));
-        soundTrack = new SoundTrack(music);
-        soundThread = new Thread(soundTrack);
-        soundThread.start();
+//        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/fighttheme.mp3"));
+//        soundTrack = new SoundTrack(music);
+//        soundThread = new Thread(soundTrack);
+//        soundThread.start();
     }
 
     @Override
@@ -83,6 +95,10 @@ public class GameScreen extends Base2DScreen{
 
         //SHIP UPDATE
         ship.update(delta);
+
+        enemyPool.updateActiveSprites(delta);
+        enemiesEmitter.generate(delta);
+
     }
 
     public void checkCollisions(){
@@ -90,6 +106,7 @@ public class GameScreen extends Base2DScreen{
 
     public void deleteAllDestroyed(){
         bulletPool.freeAllDestroyedActiveSprites();
+        enemyPool.freeAllDestroyedActiveSprites();
     }
 
     public void draw(){
@@ -104,6 +121,7 @@ public class GameScreen extends Base2DScreen{
             star[i].draw(batch);
         }
         bulletPool.drawActiveSprites(batch);
+        enemyPool.drawActiveSprites(batch);
 
         batch.end();
     }
@@ -150,7 +168,10 @@ public class GameScreen extends Base2DScreen{
         super.dispose();
         bulletPool.dispose();
         bg.dispose();
-        soundThread.stop();
+        music.dispose();
+        shipShootSound.dispose();
+//        soundThread.stop();
+        enemyPool.dispose();
         textureAtlas.dispose(); //star
 
     }
