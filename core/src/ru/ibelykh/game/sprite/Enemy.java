@@ -6,18 +6,24 @@ import com.badlogic.gdx.math.Vector2;
 import ru.ibelykh.game.base.BattleShip;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.pool.BulletPool;
+import ru.ibelykh.game.pool.ExplosionPool;
 
 public class Enemy extends BattleShip {
 
-private  Ship ship;  //ссылка на кораблю игрока
+    private  Ship ship;  //ссылка на корабл игрока
+    private enum  State {DESCENT,FIGHT}  //два состояния корабля
+    private  State state;
     private Vector2 v0=new Vector2();
+    private  Vector2 descentV = new Vector2(0,-0.15f); //чтобы корабль быстро появился на экране
 
 
-    public Enemy(BulletPool bulletPool, Ship ship, Rect worldBounds) {
+
+    public Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Ship ship, Rect worldBounds) {
        this.bulletPool = bulletPool;
        this.ship=ship;
        this.v.set(v0);
        this.worldBounds = worldBounds;
+       this.explosionPool = explosionPool;
 
     }
 
@@ -27,13 +33,25 @@ private  Ship ship;  //ссылка на кораблю игрока
     public void update(float delta) {
         super.update(delta);
         pos.mulAdd(v,delta);
-        reloadTimer += delta;
-        if (reloadTimer >= reloadInterval){
-            reloadTimer = 0f;
-            shoot();
-        }
-        if (getBottom()<=worldBounds.getBottom()){
-            this.setDestroyed(true);
+//враги начинают стрелять когда выползут на экран на половину своей высоты
+        switch (state){
+            case DESCENT:
+                if (getTop() <= worldBounds.getTop()+getHalfHeight()){
+                    v.set(v0);
+                    state = State.FIGHT;
+                }
+                break;
+            case FIGHT:
+                reloadTimer += delta;
+                if (reloadTimer >= reloadInterval){
+                    reloadTimer = 0f;
+                    shoot();
+                }
+                if (getBottom()<=worldBounds.getBottom()){
+                    this.setDestroyed(true);
+                    boom();
+                }
+
         }
     }
 
@@ -59,6 +77,7 @@ private  Ship ship;  //ссылка на кораблю игрока
         this.hp = hp;
         setHeightProportion(height);
         reloadTimer = reloadInterval;
-        v.set(v0);
+        v.set(descentV);
+        state = State.DESCENT;
     }
 }

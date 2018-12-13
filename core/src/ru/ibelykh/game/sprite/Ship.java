@@ -39,6 +39,9 @@ super.resize(worldBounds);
 
     public boolean keyDown(int keycode) {
         switch (keycode){
+            case Input.Keys.W:
+                shoot();
+                break;
             case Input.Keys.A:
             case Input.Keys.LEFT:
                 pressedLeft = true;
@@ -137,7 +140,7 @@ super.resize(worldBounds);
         pos.mulAdd(v, delta);
         reloadTimer+=delta;
         if (reloadTimer>=reloadInterval){
-            reloadTimer=0f;
+            reloadTimer=-0.05f;
             shoot();
         }
         checkAndHandleBounds();

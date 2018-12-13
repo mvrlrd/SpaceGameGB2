@@ -8,11 +8,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+
+import java.util.List;
+
 import ru.ibelykh.game.base.Base2DScreen;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.pool.BulletPool;
 import ru.ibelykh.game.pool.EnemyPool;
+import ru.ibelykh.game.pool.ExplosionPool;
 import ru.ibelykh.game.sprite.Background;
+import ru.ibelykh.game.sprite.Bullet;
+import ru.ibelykh.game.sprite.Enemy;
 import ru.ibelykh.game.sprite.Ship;
 import ru.ibelykh.game.sprite.Star;
 import ru.ibelykh.game.utils.EnemiesEmitter;
@@ -38,6 +44,8 @@ public class GameScreen extends Base2DScreen{
 
     private EnemyPool enemyPool;
     private EnemiesEmitter enemiesEmitter;
+    private ExplosionPool explosionPool;
+    private Sound explosionSound;
 
 
     public GameScreen(Game game) {
@@ -49,6 +57,7 @@ public class GameScreen extends Base2DScreen{
         super.show();
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/fighttheme.mp3"));
         music.setLooping(true);
+        music.setVolume(0.2f);
         music.play();
 
         //BACKGROUND
@@ -61,12 +70,14 @@ public class GameScreen extends Base2DScreen{
         for (int i = 0; i <star.length ; i++) {
             star[i]= new Star(textureAtlas);
         }
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/boom.wav"));
         bulletPool = new BulletPool();
+        explosionPool = new ExplosionPool(new TextureAtlas("images/explosion.atlas"),explosionSound);
         shipShootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pau.wav"));
         atl = new TextureAtlas("images/shipsAndBullets.atlas");
         ship = new Ship(atl,bulletPool,shipShootSound);
 
-        enemyPool = new EnemyPool(bulletPool,ship,worldBounds);
+        enemyPool = new EnemyPool(bulletPool,explosionPool,ship,worldBounds);
         enemiesEmitter = new EnemiesEmitter(worldBounds, enemyPool, atl);
 
         //SOUND     Попытка реализовать музыку в другом потоке
@@ -98,15 +109,46 @@ public class GameScreen extends Base2DScreen{
 
         enemyPool.updateActiveSprites(delta);
         enemiesEmitter.generate(delta);
+        explosionPool.updateActiveSprites(delta);
 
     }
 
     public void checkCollisions(){
+        List<Enemy> enemyList = enemyPool.getActiveObjects();
+
+        for (Enemy enemy : enemyList){
+            if (enemy.isDestroyed()){
+                continue;
+            }
+            float minDist = enemy.getHalfWidth() + ship.getHalfWidth();
+
+            if (enemy.pos.dst2(ship.pos)<minDist*minDist){
+                enemy.setDestroyed(true);
+                enemy.boom();
+                return;
+            }
+        }
+List<Bullet> bulletList = bulletPool.getActiveObjects();
+        for (Enemy enemy : enemyList){
+            if (enemy.isDestroyed()){
+                continue;
+            }
+            for (Bullet bullet : bulletList){
+                if (bullet.getOwner() != ship || bullet.isDestroyed()){
+                    continue;
+                }
+                if (!bullet.isOutside(enemy)){
+                    enemy.damage(bullet.getDamage());
+                    bullet.setDestroyed(true);
+                }
+            }
+        }
     }
 
     public void deleteAllDestroyed(){
         bulletPool.freeAllDestroyedActiveSprites();
         enemyPool.freeAllDestroyedActiveSprites();
+        explosionPool.freeAllDestroyedActiveSprites();
     }
 
     public void draw(){
@@ -122,6 +164,7 @@ public class GameScreen extends Base2DScreen{
         }
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
+        explosionPool.drawActiveSprites(batch);
 
         batch.end();
     }
@@ -170,8 +213,10 @@ public class GameScreen extends Base2DScreen{
         bg.dispose();
         music.dispose();
         shipShootSound.dispose();
+        explosionSound.dispose();
         enemyPool.dispose();
         textureAtlas.dispose(); //star
+        explosionPool.dispose();
 
     }
 }
