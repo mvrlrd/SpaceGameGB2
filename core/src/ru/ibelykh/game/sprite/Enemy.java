@@ -11,7 +11,7 @@ public class Enemy extends BattleShip {
 
 private  Ship ship;  //ссылка на кораблю игрока
     private Vector2 v0=new Vector2();
-    private Rect worldBounds;
+
 
     public Enemy(BulletPool bulletPool, Ship ship, Rect worldBounds) {
        this.bulletPool = bulletPool;
@@ -27,6 +27,11 @@ private  Ship ship;  //ссылка на кораблю игрока
     public void update(float delta) {
         super.update(delta);
         pos.mulAdd(v,delta);
+        reloadTimer += delta;
+        if (reloadTimer >= reloadInterval){
+            reloadTimer = 0f;
+            shoot();
+        }
         if (getBottom()<=worldBounds.getBottom()){
             this.setDestroyed(true);
         }

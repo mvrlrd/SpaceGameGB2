@@ -1,33 +1,47 @@
 shipsAndBullets-0.png
-size: 494, 773
+size: 505, 1017
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+cat
+  rotate: false
+  xy: 257, 524
+  size: 233, 249
+  orig: 244, 249
+  offset: 3, 0
+  index: -1
 evelship
   rotate: false
-  xy: 257, 245
+  xy: 227, 775
   size: 233, 173
   orig: 283, 283
   offset: 29, 98
   index: -1
 kaktus
   rotate: false
-  xy: 1, 1
+  xy: 1, 254
   size: 254, 518
   orig: 259, 524
   offset: 5, 3
   index: -1
 sale
   rotate: false
-  xy: 1, 521
+  xy: 1, 1
   size: 492, 251
   orig: 492, 251
   offset: 0, 0
   index: -1
-shipwasattacked 12.47.52
+ship
   rotate: false
-  xy: 257, 1
+  xy: 1, 774
   size: 224, 242
   orig: 224, 243
   offset: 0, 1
+  index: -1
+starwars
+  rotate: false
+  xy: 257, 254
+  size: 247, 268
+  orig: 247, 268
+  offset: 0, 0
   index: -1

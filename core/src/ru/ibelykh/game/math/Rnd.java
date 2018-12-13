@@ -11,4 +11,9 @@ public class Rnd {
     public static float nextFloat(float min, float max) {
         return random.nextFloat() * (max - min) + min;
     }
+
+//    public  static String randomEnemy (String a, String b, String c){
+//
+//    }
+
 }

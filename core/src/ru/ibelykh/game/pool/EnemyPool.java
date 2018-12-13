@@ -1,6 +1,6 @@
 package ru.ibelykh.game.pool;
 
-import ru.ibelykh.game.base.Sprite;
+
 import ru.ibelykh.game.base.SpritesPool;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.sprite.Enemy;

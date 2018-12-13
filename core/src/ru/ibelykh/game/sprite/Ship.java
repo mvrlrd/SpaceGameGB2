@@ -20,7 +20,7 @@ public class Ship extends BattleShip {
 
 
     public Ship(TextureAtlas atlas, BulletPool bulletPool, Sound sound) {
-        super(atlas.findRegion("shipwasattacked 12.47.52"),1,1,1, sound);
+        super(atlas.findRegion("ship"),1,1,1, sound);
         setHeightProportion(0.15f);
         this.bulletPool = bulletPool;
         this.reloadInterval = 0.25f;
