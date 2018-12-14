@@ -25,6 +25,8 @@ public class BattleShip extends Sprite {
     protected float reloadTimer;
     protected Sound shootSound;
     protected ExplosionPool explosionPool;
+    protected int dmg;
+
 
     private float damageAnimatedInterval = 0.1f;
     private float damageAnimatedTimer = damageAnimatedInterval;
@@ -75,7 +77,13 @@ public class BattleShip extends Sprite {
 
     }
 
+
+
     public int getHp() {
         return hp;
+    }
+
+    public int getDmg() {
+        return dmg;
     }
 }

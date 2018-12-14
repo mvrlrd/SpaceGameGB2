@@ -16,6 +16,7 @@ public class EnemiesEmitter {
     private static final int ENEMY_SMALL_BULLET_DAMAGE = 1;
     private static final float ENEMY_SMALL_RELOAD_INTERVAL = 1f;
     private static final int ENEMY_SMALL_HP = 3;
+    private static final int ENEMY_SMALL_Damage = 3;
 
     private static final float ENEMY_MEDIUM_HEIGHT = 0.2f;
     private static final float ENEMY_MEDIUM_BULLET_HEIGHT = 0.02f;
@@ -23,6 +24,7 @@ public class EnemiesEmitter {
     private static final int ENEMY_MEDIUM_BULLET_DAMAGE = 5;
     private static final float ENEMY_MEDIUM_RELOAD_INTERVAL = 3f;
     private static final int ENEMY_MEDIUM_HP = 10;
+    private static final int ENEMY_MEDIUM_Damage = 10;
 
     private static final float ENEMY_BIG_HEIGHT = 0.25f;
     private static final float ENEMY_BIG_BULLET_HEIGHT = 0.025f;
@@ -30,13 +32,15 @@ public class EnemiesEmitter {
     private static final int ENEMY_BIG_BULLET_DAMAGE = 10;
     private static final float ENEMY_BIG_RELOAD_INTERVAL = 5f;
     private static final int ENEMY_BIG_HP = 15;
+    private static final int ENEMY_BIG_Damage = 15;
 
     private static final float DROP_BOX_HEIGHT = 0.07f;
     private static final float DROP_BOX_BULLET_HEIGHT = 0.0f;
     private static final float DROP_BOX_BULLET_VY = -0.0f;
     private static final int DROP_BOX_BULLET_DAMAGE = 0;
     private static final float DROP_BOX_RELOAD_INTERVAL = 100f;
-    private static final int DROP_BOX__HP = -5;
+    private static final int DROP_BOX__HP = 5;
+    private static final int DROP_BOX__Damage = -5;
 
 
     private Rect worldBounds;
@@ -96,7 +100,8 @@ public class EnemiesEmitter {
                         ENEMY_SMALL_BULLET_DAMAGE,
                         ENEMY_SMALL_RELOAD_INTERVAL,
                         ENEMY_SMALL_HEIGHT,
-                        ENEMY_SMALL_HP
+                        ENEMY_SMALL_HP,
+                        ENEMY_SMALL_Damage
 
                 );
             } else if ((type>=0.6f)&&(type<0.8)){
@@ -109,7 +114,8 @@ public class EnemiesEmitter {
                         ENEMY_MEDIUM_BULLET_DAMAGE,
                         ENEMY_MEDIUM_RELOAD_INTERVAL,
                         ENEMY_MEDIUM_HEIGHT,
-                        ENEMY_MEDIUM_HP
+                        ENEMY_MEDIUM_HP,
+                        ENEMY_MEDIUM_Damage
 
                 );
             } else if ((type>=0.8f)&&(type<0.9)){
@@ -122,7 +128,8 @@ public class EnemiesEmitter {
                         ENEMY_BIG_BULLET_DAMAGE,
                         ENEMY_BIG_RELOAD_INTERVAL,
                         ENEMY_BIG_HEIGHT,
-                        ENEMY_BIG_HP
+                        ENEMY_BIG_HP,
+                        ENEMY_BIG_Damage
 
                 );
             }else {
@@ -135,10 +142,12 @@ public class EnemiesEmitter {
                         DROP_BOX_BULLET_DAMAGE,
                         DROP_BOX_RELOAD_INTERVAL,
                         DROP_BOX_HEIGHT,
-                        DROP_BOX__HP
+                        DROP_BOX__HP,
+                        DROP_BOX__Damage
 
                 );
             }
+
 
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
             enemy.setBottom(worldBounds.getTop());

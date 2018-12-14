@@ -16,6 +16,7 @@ public class Enemy extends BattleShip {
     private Vector2 v0=new Vector2();
     private  Vector2 descentV = new Vector2(0,-0.15f); //чтобы корабль быстро появился на экране
 
+
     public Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Ship ship, Rect worldBounds) {
        this.bulletPool = bulletPool;
        this.ship=ship;
@@ -60,7 +61,8 @@ public class Enemy extends BattleShip {
             int bulletDamage,
             float reloadInterval,
             float height,
-            int hp
+            int hp,
+            int dmg
     ){
         this.regions = regions;
         this.v0.set(v0);
@@ -74,6 +76,8 @@ public class Enemy extends BattleShip {
         reloadTimer = reloadInterval;
         v.set(descentV);
         state = State.DESCENT;
+        this.dmg = dmg;
+
     }
 
     public boolean isBulletCollision(Rect bullet){

@@ -80,7 +80,7 @@ public class Base2DScreen implements Screen, InputProcessor {
     }
 
     public void resize(Rect worldBounds){
-        System.out.println("resize worldBounds width = "+ worldBounds.getWidth() + "   worldBoundsHeight = "+ worldBounds.getHeight());
+//        System.out.println("resize worldBounds width = "+ worldBounds.getWidth() + "   worldBoundsHeight = "+ worldBounds.getHeight());
     }
 
     @Override
@@ -108,13 +108,13 @@ public class Base2DScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("keydowm  keycode = "+ keycode);
+//        System.out.println("keydowm  keycode = "+ keycode);
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        System.out.println("keyup keycode = "+ keycode);
+//        System.out.println("keyup keycode = "+ keycode);
         return false;
     }
 
@@ -126,40 +126,40 @@ public class Base2DScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchdown = "+ screenX+" "+ screenY);
+//        System.out.println("touchdown = "+ screenX+" "+ screenY);
         touch.set(screenX,screenBounds.getHeight()-screenY).mul(screenToWorld);
         touchDown(touch,pointer);
         return false;
     }
 
     public boolean touchDown(Vector2 touch,  int pointer) {
-        System.out.println("touchdown touch.x= "+ touch.x+" "+ " touch.y= "+ touch.y+ "  POINTER "+pointer);
+//        System.out.println("touchdown touch.x= "+ touch.x+" "+ " touch.y= "+ touch.y+ "  POINTER "+pointer);
 
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchup = "+ screenX+" "+ screenY);
+//        System.out.println("touchup = "+ screenX+" "+ screenY);
         touch.set(screenX,screenBounds.getHeight()-screenY).mul(screenToWorld);
         touchUp(touch,pointer);
         return false;
     }
     public boolean touchUp(Vector2 touch, int pointer) {
-        System.out.println("touchup  touch.x= "+ touch.x+" touch.y = "+ touch.y);
+//        System.out.println("touchup  touch.x= "+ touch.x+" touch.y = "+ touch.y);
 
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        System.out.println("touchdragged = "+ screenX+" "+ screenY);
+//        System.out.println("touchdragged = "+ screenX+" "+ screenY);
         touch.set(screenX,screenBounds.getHeight()-screenY).mul(screenToWorld);
         touchDragged(touch,pointer);
         return false;
     }
     public boolean touchDragged(Vector2 touch, int pointer) {
-        System.out.println("touchdragged touchdragger.x= "+ touch.x+" touchdragger.y = "+ touch.y);
+//        System.out.println("touchdragged touchdragger.x= "+ touch.x+" touchdragger.y = "+ touch.y);
 
         return false;
     }
