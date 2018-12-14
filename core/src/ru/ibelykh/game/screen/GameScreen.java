@@ -75,17 +75,12 @@ public class GameScreen extends Base2DScreen{
         explosionPool = new ExplosionPool(new TextureAtlas("images/explosion.atlas"),explosionSound);
         shipShootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pau.wav"));
         atl = new TextureAtlas("images/shipsAndBullets.atlas");
-        ship = new Ship(atl,bulletPool,shipShootSound);
+        ship = new Ship(atl,bulletPool,explosionPool,shipShootSound);
 
         enemyPool = new EnemyPool(bulletPool,explosionPool,ship,worldBounds);
         enemiesEmitter = new EnemiesEmitter(worldBounds, enemyPool, atl);
 
-        //SOUND     Попытка реализовать музыку в другом потоке
-//        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/fighttheme.mp3"));
-//        soundTrack = new SoundTrack(music);
-//        soundThread = new Thread(soundTrack);
-//        soundThread.start();
-    }
+     }
 
     @Override
     public void render(float delta) {
@@ -105,8 +100,9 @@ public class GameScreen extends Base2DScreen{
         bulletPool.updateActiveSprites(delta);
 
         //SHIP UPDATE
-        ship.update(delta);
-
+        if (!ship.isDestroyed()) {
+            ship.update(delta);
+        }
         enemyPool.updateActiveSprites(delta);
         enemiesEmitter.generate(delta);
         explosionPool.updateActiveSprites(delta);
@@ -125,6 +121,7 @@ public class GameScreen extends Base2DScreen{
             if (enemy.pos.dst2(ship.pos)<minDist*minDist){
                 enemy.setDestroyed(true);
                 enemy.boom();
+                ship.damage(ship.getHp());
                 return;
             }
         }
@@ -137,12 +134,22 @@ List<Bullet> bulletList = bulletPool.getActiveObjects();
                 if (bullet.getOwner() != ship || bullet.isDestroyed()){
                     continue;
                 }
-                if (!bullet.isOutside(enemy)){
+                if (enemy.isBulletCollision(bullet)){
                     enemy.damage(bullet.getDamage());
                     bullet.setDestroyed(true);
                 }
             }
         }
+        for (Bullet bullet : bulletList){
+            if (bullet.isDestroyed() || bullet.getOwner() == ship) {
+                continue;
+            }
+            if (ship.isBulletCollision(bullet)){
+                bullet.setDestroyed(true);
+                ship.damage(bullet.getDamage());
+            }
+        }
+
     }
 
     public void deleteAllDestroyed(){
@@ -157,7 +164,10 @@ List<Bullet> bulletList = bulletPool.getActiveObjects();
         batch.begin();
 
         background.draw(batch);
-        ship.draw(batch);
+        if (!ship.isDestroyed()) {
+            ship.draw(batch);
+        }
+
         //STAR DRAW
         for (int i = 0; i <star.length ; i++) {  //Star 5
             star[i].draw(batch);

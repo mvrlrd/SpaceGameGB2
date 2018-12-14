@@ -74,4 +74,8 @@ public class BattleShip extends Sprite {
 //        frame = 1;
 
     }
+
+    public int getHp() {
+        return hp;
+    }
 }

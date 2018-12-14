@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import ru.ibelykh.game.base.BattleShip;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.pool.BulletPool;
+import ru.ibelykh.game.pool.ExplosionPool;
 
 public class Ship extends BattleShip {
 
@@ -19,16 +20,18 @@ public class Ship extends BattleShip {
     private int rightPointer = INVALID_POINTER;
 
 
-    public Ship(TextureAtlas atlas, BulletPool bulletPool, Sound sound) {
+    public Ship(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Sound sound) {
         super(atlas.findRegion("ship"),1,1,1, sound);
         setHeightProportion(0.15f);
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.reloadInterval = 0.25f;
         this.bulletRegion = atlas.findRegion("kaktus");
         this.bulletHeight=0.05f;
         this.bulletV.set(0,0.5f);
         this.bulletDamage = 1;
-        this.hp = 100; //кол-во жизней
+        this.hp = 5; //кол-во жизней
+
     }
 
     @Override
@@ -133,6 +136,15 @@ super.resize(worldBounds);
     private void stop(){
         v.setZero();
     }
+
+    public boolean isBulletCollision(Rect bullet){
+        return !(bullet.getRight() < getLeft()
+                || bullet.getLeft() > getRight()
+                || bullet.getBottom() > pos.y
+                || bullet.getTop() < getBottom());
+    }
+
+
 
         @Override
     public void update(float delta) {
