@@ -12,26 +12,24 @@ import ru.ibelykh.game.sprite.Enemy;
 public class EnemiesEmitter {
     private static final float ENEMY_SMALL_HEIGHT = 0.1f;
     private static final float ENEMY_SMALL_BULLET_HEIGHT = 0.01f;
-    private static final float ENEMY_SMALL_BULLET_VY = -0.3f;
+    private static final float ENEMY_SMALL_BULLET_VY = -0.5f;
     private static final int ENEMY_SMALL_BULLET_DAMAGE = 1;
-    private static final float ENEMY_SMALL_RELOAD_INTERVAL = 3f;
+    private static final float ENEMY_SMALL_RELOAD_INTERVAL = 1f;
     private static final int ENEMY_SMALL_HP = 3;
 
     private static final float ENEMY_MEDIUM_HEIGHT = 0.2f;
     private static final float ENEMY_MEDIUM_BULLET_HEIGHT = 0.02f;
-    private static final float ENEMY_MEDIUM_BULLET_VY = -0.25f;
+    private static final float ENEMY_MEDIUM_BULLET_VY = -0.5f;
     private static final int ENEMY_MEDIUM_BULLET_DAMAGE = 5;
-    private static final float ENEMY_MEDIUM_RELOAD_INTERVAL = 4f;
+    private static final float ENEMY_MEDIUM_RELOAD_INTERVAL = 3f;
     private static final int ENEMY_MEDIUM_HP = 10;
 
     private static final float ENEMY_BIG_HEIGHT = 0.25f;
-    private static final float ENEMY_BIG_BULLET_HEIGHT = 0.04f;
-    private static final float ENEMY_BIG_BULLET_VY = -0.25f;
+    private static final float ENEMY_BIG_BULLET_HEIGHT = 0.025f;
+    private static final float ENEMY_BIG_BULLET_VY = -0.4f;
     private static final int ENEMY_BIG_BULLET_DAMAGE = 10;
-    private static final float ENEMY_BIG_RELOAD_INTERVAL = 1f;
+    private static final float ENEMY_BIG_RELOAD_INTERVAL = 5f;
     private static final int ENEMY_BIG_HP = 15;
-
-
 
     private Rect worldBounds;
     private float generateInterval = 4f;
@@ -43,7 +41,7 @@ public class EnemiesEmitter {
 
     private  final Vector2 enemySmallV = new Vector2(0f, -0.2f);
     private  final Vector2 enemyMediumV = new Vector2(0f, -0.05f);
-    private  final Vector2 enemyBigV = new Vector2(0f, -0.04f);
+    private  final Vector2 enemyBigV = new Vector2(0f, -0.06f);
 
     private TextureRegion bulletRegion;
 
@@ -65,8 +63,6 @@ public class EnemiesEmitter {
 
         this.bulletRegion = atlas.findRegion("sale");
     }
-
-
 
     public void generate(float delta) {
         generateTimer += delta;

@@ -79,5 +79,9 @@ public abstract class Sprite extends Rect {
     public void setDestroyed(boolean destroyed) {
         isDestroyed = destroyed;
     }
+
+
+    public void mouseMoved(int screenX, int screenY){
+    }
 }
 
