@@ -31,6 +31,14 @@ public class EnemiesEmitter {
     private static final float ENEMY_BIG_RELOAD_INTERVAL = 5f;
     private static final int ENEMY_BIG_HP = 15;
 
+    private static final float DROP_BOX_HEIGHT = 0.07f;
+    private static final float DROP_BOX_BULLET_HEIGHT = 0.0f;
+    private static final float DROP_BOX_BULLET_VY = -0.0f;
+    private static final int DROP_BOX_BULLET_DAMAGE = 0;
+    private static final float DROP_BOX_RELOAD_INTERVAL = 100f;
+    private static final int DROP_BOX__HP = -5;
+
+
     private Rect worldBounds;
     private float generateInterval = 4f;
     private float generateTimer;
@@ -38,10 +46,13 @@ public class EnemiesEmitter {
     private TextureRegion[] enemySmallRegion;
     private TextureRegion[] enemyMediumRegion;
     private TextureRegion[] enemyBigRegion;
+    private TextureRegion[] dropBoxRegion;
+
 
     private  final Vector2 enemySmallV = new Vector2(0f, -0.2f);
     private  final Vector2 enemyMediumV = new Vector2(0f, -0.05f);
     private  final Vector2 enemyBigV = new Vector2(0f, -0.06f);
+    private  final Vector2 dropBoxV = new Vector2(0f, -0.5f);
 
     private TextureRegion bulletRegion;
 
@@ -61,6 +72,10 @@ public class EnemiesEmitter {
         TextureRegion textureRegion2 = atlas.findRegion("cat");
         this.enemyBigRegion = Regions.split(textureRegion2,1,1,1); //ПОСКОЛЬКУ ДВА ВАРИАНТА ВРАГОВ
 
+        TextureRegion textureRegion3 = atlas.findRegion("dropBox");
+        this.dropBoxRegion = Regions.split(textureRegion3,1,1,1); //ПОСКОЛЬКУ ДВА ВАРИАНТА ВРАГОВ
+
+
         this.bulletRegion = atlas.findRegion("sale");
     }
 
@@ -71,7 +86,7 @@ public class EnemiesEmitter {
             Enemy enemy = enemyPool.obtain();
 
             float type = (float) Math.random();
-            if (type<0.7f) {
+            if (type<0.6f) {
                 enemy.set(
                         enemySmallRegion,
                         enemySmallV,
@@ -84,7 +99,7 @@ public class EnemiesEmitter {
                         ENEMY_SMALL_HP
 
                 );
-            } else if (type<0.9f){
+            } else if ((type>=0.6f)&&(type<0.8)){
                 enemy.set(
                         enemyMediumRegion,
                         enemyMediumV,
@@ -97,7 +112,7 @@ public class EnemiesEmitter {
                         ENEMY_MEDIUM_HP
 
                 );
-            } else {
+            } else if ((type>=0.8f)&&(type<0.9)){
                 enemy.set(
                         enemyBigRegion,
                         enemyBigV,
@@ -108,6 +123,19 @@ public class EnemiesEmitter {
                         ENEMY_BIG_RELOAD_INTERVAL,
                         ENEMY_BIG_HEIGHT,
                         ENEMY_BIG_HP
+
+                );
+            }else {
+                enemy.set(
+                        dropBoxRegion,
+                        dropBoxV,
+                        bulletRegion,
+                        DROP_BOX_BULLET_HEIGHT,
+                        DROP_BOX_BULLET_VY,
+                        DROP_BOX_BULLET_DAMAGE,
+                        DROP_BOX_RELOAD_INTERVAL,
+                        DROP_BOX_HEIGHT,
+                        DROP_BOX__HP
 
                 );
             }

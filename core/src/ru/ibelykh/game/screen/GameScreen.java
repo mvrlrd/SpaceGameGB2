@@ -148,7 +148,9 @@ public class GameScreen extends Base2DScreen{
                 if (enemy.pos.dst2(ship.pos)<minDist*minDist){
                     enemy.setDestroyed(true);
                     enemy.boom();
-                    ship.damage(ship.getHp());
+                    System.out.println("HP DO"+ship.getHp());
+                    ship.damage(enemy.getHp());
+                    System.out.println("HP After"+ship.getHp());
                     return;
                 }
             }
