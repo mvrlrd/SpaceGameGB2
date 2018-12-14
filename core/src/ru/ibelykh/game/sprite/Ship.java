@@ -30,7 +30,7 @@ public class Ship extends BattleShip {
         this.bulletHeight=0.05f;
         this.bulletV.set(0,0.5f);
         this.bulletDamage = 1;
-        this.hp = 5; //кол-во жизней
+        this.hp = 1; //кол-во жизней
 
     }
 
