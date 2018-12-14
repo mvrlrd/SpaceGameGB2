@@ -235,16 +235,20 @@ public class GameScreen extends Base2DScreen{
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         ship.touchDown(touch,pointer);
-        buttonExit.touchDown(touch,pointer);
-        buttonNewGame.touchDown(touch,pointer);
+        if (ship.isDestroyed()) {
+            buttonExit.touchDown(touch, pointer);
+            buttonNewGame.touchDown(touch, pointer);
+        }
         return super.touchDown(touch, pointer);
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
         ship.touchUp(touch,pointer);
-        buttonExit.touchUp(touch,pointer);
-        buttonNewGame.touchUp(touch,pointer);
+        if (ship.isDestroyed()) {
+            buttonExit.touchUp(touch, pointer);
+            buttonNewGame.touchUp(touch, pointer);
+        }
         return super.touchUp(touch, pointer);
     }
 
