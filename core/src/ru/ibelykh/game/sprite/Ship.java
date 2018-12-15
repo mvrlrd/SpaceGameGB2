@@ -20,7 +20,7 @@ public class Ship extends BattleShip {
     private int rightPointer = INVALID_POINTER;
 
 
-    public Ship(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Sound sound) {
+    public Ship(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool,Rect worldBounds,  Sound sound) {
         super(atlas.findRegion("ship"),1,1,1, sound);
         setHeightProportion(0.15f);
         this.bulletPool = bulletPool;
@@ -30,8 +30,16 @@ public class Ship extends BattleShip {
         this.bulletHeight=0.05f;
         this.bulletV.set(0,0.5f);
         this.bulletDamage = 1;
+        this.worldBounds = worldBounds;
+        setToNewGame();
+
+
+    }
+    public void setToNewGame(){
+        pos.x = worldBounds.pos.x;
         this.hp = 7; //кол-во жизней
 
+        setDestroyed(false);
     }
 
     @Override
@@ -168,4 +176,6 @@ super.resize(worldBounds);
             stop();
         }
     }
+
+
     }
