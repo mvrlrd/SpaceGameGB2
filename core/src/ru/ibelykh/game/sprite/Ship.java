@@ -36,6 +36,7 @@ public class Ship extends BattleShip {
 
     }
     public void setToNewGame(){
+        stop();
         pos.x = worldBounds.pos.x;
         this.hp = 7; //кол-во жизней
 

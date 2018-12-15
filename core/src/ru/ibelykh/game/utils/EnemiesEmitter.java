@@ -58,6 +58,8 @@ public class EnemiesEmitter {
     private  final Vector2 enemyBigV = new Vector2(0f, -0.06f);
     private  final Vector2 dropBoxV = new Vector2(0f, -0.5f);
 
+    private int level;
+
     private TextureRegion bulletRegion;
 
     private EnemyPool enemyPool;
@@ -83,7 +85,8 @@ public class EnemiesEmitter {
         this.bulletRegion = atlas.findRegion("sale");
     }
 
-    public void generate(float delta) {
+    public void generate(float delta, int frags) {
+        level = frags / 20+1;
         generateTimer += delta;
         if (generateTimer >= generateInterval) {
             generateTimer = 0f;
@@ -97,11 +100,11 @@ public class EnemiesEmitter {
                         bulletRegion,
                         ENEMY_SMALL_BULLET_HEIGHT,
                         ENEMY_SMALL_BULLET_VY,
-                        ENEMY_SMALL_BULLET_DAMAGE,
+                        ENEMY_SMALL_BULLET_DAMAGE*level,
                         ENEMY_SMALL_RELOAD_INTERVAL,
                         ENEMY_SMALL_HEIGHT,
-                        ENEMY_SMALL_HP,
-                        ENEMY_SMALL_Damage
+                        ENEMY_SMALL_HP*level,
+                        ENEMY_SMALL_Damage*level
 
                 );
             } else if ((type>=0.6f)&&(type<0.8)){
@@ -111,10 +114,10 @@ public class EnemiesEmitter {
                         bulletRegion,
                         ENEMY_MEDIUM_BULLET_HEIGHT,
                         ENEMY_MEDIUM_BULLET_VY,
-                        ENEMY_MEDIUM_BULLET_DAMAGE,
+                        ENEMY_MEDIUM_BULLET_DAMAGE*level,
                         ENEMY_MEDIUM_RELOAD_INTERVAL,
                         ENEMY_MEDIUM_HEIGHT,
-                        ENEMY_MEDIUM_HP,
+                        ENEMY_MEDIUM_HP*level,
                         ENEMY_MEDIUM_Damage
 
                 );
@@ -128,7 +131,7 @@ public class EnemiesEmitter {
                         ENEMY_BIG_BULLET_DAMAGE,
                         ENEMY_BIG_RELOAD_INTERVAL,
                         ENEMY_BIG_HEIGHT,
-                        ENEMY_BIG_HP,
+                        ENEMY_BIG_HP*level,
                         ENEMY_BIG_Damage
 
                 );
@@ -143,7 +146,7 @@ public class EnemiesEmitter {
                         DROP_BOX_RELOAD_INTERVAL,
                         DROP_BOX_HEIGHT,
                         DROP_BOX__HP,
-                        DROP_BOX__Damage
+                        DROP_BOX__Damage*level
 
                 );
             }
@@ -153,4 +156,12 @@ public class EnemiesEmitter {
             enemy.setBottom(worldBounds.getTop());
         }
     }
+
+    public int getLevel() {
+        return level;
+    }
+public void setToNewGame(){
+        level = 1;
+}
+
 }

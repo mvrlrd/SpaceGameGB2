@@ -7,8 +7,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Align;
+
 import java.util.List;
 import ru.ibelykh.game.base.Base2DScreen;
+import ru.ibelykh.game.base.Font;
 import ru.ibelykh.game.math.Rect;
 import ru.ibelykh.game.pool.BulletPool;
 import ru.ibelykh.game.pool.EnemyPool;
@@ -24,8 +27,14 @@ import ru.ibelykh.game.utils.EnemiesEmitter;
 
 public class GameScreen extends Base2DScreen{
 
+    private static final float FONT_SIZE = 0.02f;
+
     //Star
     private static final int STAR_COUNT = 128;
+    private static final String FRAGS = "Frags: ";
+    private static final String HP = "HP: ";
+    private static final String LVL = "level: ";
+
     private TextureAtlas textureAtlas;
     private Star[] star;
 
@@ -64,6 +73,11 @@ public class GameScreen extends Base2DScreen{
 
     //Counts
    private int frags;
+
+   private Font font;
+   private StringBuilder sbFrags = new StringBuilder();
+    private StringBuilder sbHp = new StringBuilder();
+    private StringBuilder sbLvl = new StringBuilder();
 
 
     public GameScreen(Game game) {
@@ -116,6 +130,8 @@ public class GameScreen extends Base2DScreen{
         enemiesEmitter = new EnemiesEmitter(worldBounds, enemyPool, atl);
         startNewGameButton = new StartNewGameButton(btAtlas, this);
         startNewGame();
+        font = new Font("font/font.fnt" , "font/font.png");
+        font.setFontSize(FONT_SIZE);
      }
 
     @Override
@@ -143,7 +159,7 @@ public class GameScreen extends Base2DScreen{
                 }
                 bulletPool.updateActiveSprites(delta);
                 enemyPool.updateActiveSprites(delta);
-                enemiesEmitter.generate(delta);
+                enemiesEmitter.generate(delta, frags);
 
             case GAME_OVER:
                 break;
@@ -164,6 +180,7 @@ public class GameScreen extends Base2DScreen{
                 if (enemy.pos.dst2(ship.pos)<minDist*minDist){
                     enemy.setDestroyed(true);
                     frags++;
+                    System.out.println("FRAGS:   "+ frags);
                     enemy.boom();
                     ship.damage(enemy.getDmg());
                     System.out.println("HP  "+ship.getHp());
@@ -189,6 +206,7 @@ public class GameScreen extends Base2DScreen{
                     bullet.setDestroyed(true);
                     if (enemy.isDestroyed()){
                         frags++;
+                        System.out.println("FRAGS:   "+ frags);
                     }
                     }
                 }
@@ -252,8 +270,17 @@ public class GameScreen extends Base2DScreen{
 //            buttonNewGame.draw(batch);
              // приглушаем музыку
 //        }
-
+ printInfo();
         batch.end();
+    }
+
+    public void printInfo(){
+        sbHp.setLength(0);
+        sbLvl.setLength(0);
+        sbFrags.setLength(0);
+        font.draw(batch, sbFrags.append(FRAGS).append(frags),worldBounds.getLeft(),worldBounds.getTop());     // font.draw(batch, "Frags:"+ frags) --- так плохо потому что будет создаваться каждый раз новая строка для frags и для "frags" итого 120 строк в сек
+        font.draw(batch, sbHp.append(HP).append(ship.getHp()),worldBounds.pos.x,worldBounds.getTop(),Align.center);
+        font.draw(batch, sbLvl.append(LVL).append(enemiesEmitter.getLevel()),worldBounds.getRight(),worldBounds.getTop(), Align.right);
     }
 
     @Override
@@ -331,7 +358,8 @@ public class GameScreen extends Base2DScreen{
         music.dispose();
         shipShootSound.dispose();
         explosionSound.dispose();
-//        btAtlas.dispose();
+        font.dispose();
+        btAtlas.dispose();
         enemyPool.dispose();
         titleAtlas.dispose();
         textureAtlas.dispose();
@@ -339,6 +367,7 @@ public class GameScreen extends Base2DScreen{
     }
 
     public void startNewGame(){
+        enemiesEmitter.setToNewGame();
         state = State.PLAYING;
         music.setVolume(0.6f);
         ship.setToNewGame();
