@@ -22,12 +22,12 @@ public class Ship extends BattleShip {
 
     public Ship(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool,Rect worldBounds,  Sound sound) {
         super(atlas.findRegion("ship"),1,1,1, sound);
-        setHeightProportion(0.15f);
+        setHeightProportion(0.1f);
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
         this.reloadInterval = 0.25f;
         this.bulletRegion = atlas.findRegion("kaktus");
-        this.bulletHeight=0.05f;
+        this.bulletHeight=0.02f;
         this.bulletV.set(0,0.5f);
         this.bulletDamage = 1;
         this.worldBounds = worldBounds;
